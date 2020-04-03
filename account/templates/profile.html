@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<h2>Add User</h2>
+	<div class="row main-form">
+		{% if messages %}
+		<div class="alert alert-success" id="myTabContent" >
+			{% for message in messages %}
+			{{ message }}
+			{% endfor %}
+		</div>
+		{% endif %}
+		{{ user_info }}
+			<form method="POST" action="{% url 'profile_save' %}">
+				<div class="col-md-6 form-group">
+				    <label>First Name</label>
+				    <input type="text" class="form-control" >
+				</div>
+
+				<div class=" col-md-6 form-group">
+				    <label>Last Name</label>
+				    <input type="text" class="form-control" >
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>Gender</label>
+				    <select class="form-control" name="gender">
+				    	<option value="male">Male</option>
+				    	<option value="female">Female</option>
+				    	<option value="other">Other</option>
+				    </select>
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>Date of birth</label>
+				    <input type="date" class="form-control">
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>Contact No.</label>
+				    <input type="number" class="form-control">
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>Profile Image</label>
+				    <input type="file" class="w-100">
+				</div>
+				<div class="col-md-12 text-right">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}
