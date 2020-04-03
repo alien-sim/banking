@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class User_Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	image = models.FileField(upload_to='profile/', null=True, blank=True)
+	image = models.FileField(upload_to='images/', null=True, blank=True,help_text="Upload only .png, .jpg & .jpeg image extension.")
 	contact = models.BigIntegerField()
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
