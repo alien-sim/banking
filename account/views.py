@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='login')
 def home(request):
-    return render(request, 'signup.html')
+    return render(request, 'home.html')
 
 
 def signup(request):
