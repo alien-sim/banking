@@ -24,7 +24,7 @@ def signup(request):
         	'email' : user.email
         }
 
-        return render(request, "profile.html",user_info)
+        return render(request, "profile.html", user_info)
     else:
         return render(request, 'signup.html')
 

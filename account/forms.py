@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from .models import User_Profile
 from phone_field import PhoneField
 
 
 
-class UserProfile(forms.ModelForm):
+class User_Profile(forms.ModelForm):
 
     image = forms.FileField(required=True, widget=forms.FileInput(
         attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'})),
@@ -42,7 +42,7 @@ class UserProfile(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Enter the Pincode'})),
 
     class Meta:
-        model = UserProfile
+        model = User_Profile
         fields = {'image', 'phone_number', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
                   'address', 'city', 'pincode', }
 
