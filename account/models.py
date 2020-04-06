@@ -1,13 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from phone_field import PhoneField
+
 # Create your models here.
 
 
-class User_Profile(models.Model):
+class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.FileField(upload_to='images/', null=True, blank=True,help_text="Upload only .png, .jpg & .jpeg image extension.")
-	contact = models.BigIntegerField()
+	phone = PhoneField(blank=True, help_text='Contact phone number')
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
 	gender = models.CharField(max_length=10)
