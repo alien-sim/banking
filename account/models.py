@@ -8,8 +8,11 @@ from django.core.validators import (
     RegexValidator,
 )
 
-# Create your models here.
+choices = [
+	("Male", "Male"),
+	('Female', 'Female')
 
+]
 
 class User_Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -17,7 +20,7 @@ class User_Profile(models.Model):
 	phone = PhoneField(blank=True, help_text='Contact phone number')
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
-	gender = models.CharField(max_length=10)
+	gender = models.CharField(max_length=10, choices=choices)
 	date_of_birth = models.DateField()
 	address = models.TextField()
 	city = models.CharField(max_length=20)

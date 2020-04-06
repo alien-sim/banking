@@ -11,7 +11,7 @@ class User_Profile(forms.ModelForm):
     image = forms.FileField(required=True, widget=forms.FileInput(
         attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'})),
 
-    phone = PhoneField(required=True, blank=True, help_text='Contact phone number'),
+    phone = PhoneField(blank=True, help_text='Contact phone number'),
 
     father_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
@@ -19,12 +19,12 @@ class User_Profile(forms.ModelForm):
     mother_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
 
-    gchoice = [
+    choices = [
         ("Male", "Male"),
         ('Female', 'Female')
 
-    ]
-    gender = forms.CharField(required=True, choices=gchoice, widget=forms.
+      ]
+    gender = forms.TypedChoiceField(required=True, choices=choices, widget=forms.
                              Select(attrs={'class': 'form-control'})),
 
     date_of_birth = forms.DateField(required=True),
@@ -43,7 +43,7 @@ class User_Profile(forms.ModelForm):
 
     class Meta:
         model = User_Profile
-        fields = {'image', 'phone_number', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
+        fields = {'image', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
                   'address', 'city', 'pincode', }
 
 

@@ -12,45 +12,56 @@
 		</div>
 		{% endif %}
 		{{ user_info }}
+		<div class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6">
+		<div class="panel-group">
+			<div class="panel panel-default" style="margin-top:50px;">
+				<div class="panel-heading" style="text-align:center; font-size:25px;">Create Account</div>
+				<div class="panel-body">
 			<form method="POST" action="{% url 'profile_save' %}">
-				<div class="col-md-6 form-group">
-				    <label>First Name</label>
-				    <input type="text" class="form-control" >
-				</div>
+				{% csrf_token %}
+				{{ form.as_p }}
 
-				<div class=" col-md-6 form-group">
-				    <label>Last Name</label>
-				    <input type="text" class="form-control" >
-				</div>
+<!--				<div class="col-md-6 form-group">-->
+<!--				    <label>First Name</label>-->
+<!--				    <input type="text" class="form-control" >-->
+<!--				</div>-->
 
-				<div class="col-md-6 form-group">
-				    <label>Gender</label>
-				    <select class="form-control" name="gender">
-				    	<option value="male">Male</option>
-				    	<option value="female">Female</option>
-				    	<option value="other">Other</option>
-				    </select>
-				</div>
+<!--				<div class=" col-md-6 form-group">-->
+<!--				    <label>Last Name</label>-->
+<!--				    <input type="text" class="form-control" >-->
+<!--				</div>-->
 
-				<div class="col-md-6 form-group">
-				    <label>Date of birth</label>
-				    <input type="date" class="form-control">
-				</div>
+<!--				<div class="col-md-6 form-group">-->
+<!--				    <label>Gender</label>-->
+<!--				    <select class="form-control" name="gender">-->
+<!--				    	<option value="male">Male</option>-->
+<!--				    	<option value="female">Female</option>-->
+<!--				    	<option value="other">Other</option>-->
+<!--				    </select>-->
+<!--				</div>-->
 
-				<div class="col-md-6 form-group">
-				    <label>Contact No.</label>
-				    <input type="number" class="form-control">
-				</div>
+<!--				<div class="col-md-6 form-group">-->
+<!--				    <label>Date of birth</label>-->
+<!--				    <input type="date" class="form-control">-->
+<!--				</div>-->
 
-				<div class="col-md-6 form-group">
-				    <label>Profile Image</label>
-				    <input type="file" class="w-100">
-				</div>
-				<div class="col-md-12 text-right">
+<!--				<div class="col-md-6 form-group">-->
+<!--				    <label>Contact No.</label>-->
+<!--				    <input type="number" class="form-control">-->
+<!--				</div>-->
+
+<!--				<div class="col-md-6 form-group">-->
+<!--				    <label>Profile Image</label>-->
+<!--				    <input type="file" class="w-100">-->
+<!--				</div>-->
+<!--				<div class="col-md-12 text-right">-->
 					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
-			</form>
+			</form></div>
+
 		</div>
 	</div>
+	</div></div></div>
 
 {% endblock %}

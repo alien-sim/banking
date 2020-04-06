@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import User_Profile
 
 
 @login_required(login_url='login')
@@ -24,7 +25,7 @@ def signup(request):
         	'email' : user.email
         }
 
-        return render(request, "profile.html", user_info)
+        return render(request, "login.html", user_info)
     else:
         return render(request, 'signup.html')
 
@@ -49,10 +50,15 @@ def logout(request):
     auth_logout(request)
     return redirect('login')
 
+
+@login_required(login_url='login')
 def profile_save(request):
-	try:
-		print("save profile")
-		return render(request, "profile.html")
-	except Exception as e:
-		print("profile save error == ", e)
-	
+    if request.method == 'POST':
+        form = User_Profile(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'Account Successfully Created!!!!')
+            return redirect('home')
+    else:
+        form = User_Profile()
+    return render(request, 'profile.html', {'form': form})
