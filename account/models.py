@@ -4,12 +4,16 @@ from django.contrib.auth.models import User
 
 
 class User_Profile(models.Model):
+	g_choice = (
+        ("Male", "Male"),
+        ("Female", "Female")
+    )
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.FileField(upload_to='images/', null=True, blank=True,help_text="Upload only .png, .jpg & .jpeg image extension.")
 	contact = models.BigIntegerField()
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
-	gender = models.CharField(max_length=10)
+	gender = models.CharField(max_length=10,choices=g_choice)
 	date_of_birth = models.DateField()
 	address = models.TextField()
 	city = models.CharField(max_length=20)

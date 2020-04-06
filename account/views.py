@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from .forms import UserProfile
+
 
 @login_required(login_url='login')
 def home(request):
@@ -19,12 +21,18 @@ def signup(request):
         user.save()
         messages.add_message(request, messages.INFO, 'Successfully User registered.')
         # return redirect('login')
+        profileform = UserProfile()
+        print("formmmm -- ")
+        print(profileform)
         user_info = {
         	'username' : user.username,
-        	'email' : user.email
+        	'email' : user.email,
+        	# 'username' : 'dhsds',
+        	# 'email' : 'jdakdh@jksha.com',
+        	'profileform' : profileform
         }
 
-        return render(request, "profile.html",user_info)
+        return render(request, "profile.html",{'profileform':profileform})
     else:
         return render(request, 'signup.html')
 
