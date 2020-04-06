@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 # from phonenumber_field.formfields import PhoneNumberField
 from .models import User_Profile
+from phone_field import PhoneField
 
 
 class UserProfile(forms.ModelForm):
@@ -11,8 +12,7 @@ class UserProfile(forms.ModelForm):
     image = forms.FileField(required=True, widget=forms.FileInput(
         attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'})),
 
-    contact = forms.IntegerField(required=True, widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
+    phone = PhoneField(blank=True, help_text='Contact phone number'),
 
     father_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
@@ -26,7 +26,7 @@ class UserProfile(forms.ModelForm):
     )
 
     gender = forms.ChoiceField(choices=g_choice, widget=forms.
-                             Select(attrs={'class': 'form-control'})),
+                Select(attrs={'class': 'form-control'})),
 
     date_of_birth = forms.DateField(required=True),
 
@@ -34,25 +34,19 @@ class UserProfile(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
 
     city = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
+        attrs={'class': 'form-control', 'placeholder': 'Enter the City'})),
 
     state = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
+        attrs={'class': 'form-control', 'placeholder': 'Enter the State'})),
 
     pincode = forms.IntegerField(required=True, widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'})),
+        attrs={'class': 'form-control', 'placeholder': 'Enter the Pincode'})),
 
     class Meta:
         model = User_Profile
-        fields = {'image', 'father_name', 'mother_name', 'contact', 'gender', 'date_of_birth',
+        fields = {'image', 'phone', 'father_name', 'mother_name', 'gender', 'date_of_birth',
                   'address', 'city', 'pincode', }
 
-    # def clean_phone_number(self):
-    #     phone_number = self.cleaned_data.get("phone_number")
-    #     z = phonenumbers.parse(phone_number, "SG")
-    #     if not phonenumbers.is_valid_number(z):
-    #         raise forms.ValidationError("Number not in SG format")
-    #     return z.national_number
 
 
 
