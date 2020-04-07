@@ -125,3 +125,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
+ADMIN_EMAIL='vishalsharma.impinge@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'vishal'
+EMAIL_HOST_PASSWORD = 'VisS@123'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'vishalsharma.impinge@gmail.com'
+

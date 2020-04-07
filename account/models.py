@@ -82,3 +82,15 @@ class Transactions(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+class UserActivation(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	is_active = models.BooleanField(default=False)
+	activation_key = models.CharField(max_length=40, blank=True)
+	key_expires = models.DateTimeField()
+
+	class Meta:
+		db_table = 'user_activation'
+		verbose_name_plural = 'USER_ACTIVATION'
+
+	def __str__(self):
+		return self.user.username
