@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'banking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'bank.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'bank.sqlite'),
     }
 }
 

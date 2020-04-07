@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import User_Profile
-
+from .forms import UserProfileForm, TransactionForm
 
 @login_required(login_url='login')
 def home(request):
@@ -52,13 +51,26 @@ def logout(request):
 
 
 @login_required(login_url='login')
+def transfer(request):
+    if request.method == 'POST':
+        form1 = TransactionForm(request.POST)
+        if form1.is_valid():
+            form1.save()
+            messages.add_message(request, messages.INFO, 'Payment Successfully Done@@')
+            return redirect('home')
+    else:
+        form1 = TransactionForm()
+    return render(request, 'transfer.html', {'form1': form1})
+
+
+@login_required(login_url='login')
 def profile_save(request):
     if request.method == 'POST':
-        form = User_Profile(request.POST)
+        form = UserProfileForm(request.POST)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'Account Successfully Created!!!!')
             return redirect('home')
     else:
-        form = User_Profile()
+        form = UserProfileForm()
     return render(request, 'profile.html', {'form': form})
