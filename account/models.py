@@ -38,13 +38,19 @@ class User_Profile(models.Model):
         return str(self.user.id)
 
 
+achoice = [
+
+          ("Single Account", "Single Account"),
+          ("Joint Account", "Joint Account")
+      ]
+
+
 class Account_details(models.Model):
     id = models.UUIDField(primary_key=True,	default=uuid4, editable = False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    account_type = models.CharField(max_length=20)
+    account_type = models.CharField(max_length=20, choices=achoice)
     balance = models.FloatField(default=0)
     date_of_opening = models.DateField(auto_now_add=True)
-
 
     class Meta:
         db_table = 'account_details'
