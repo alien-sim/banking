@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<h2>Add User</h2>
+	<div class="row main-form">
+		{% if messages %}
+		<div class="alert alert-success" id="myTabContent" >
+			{% for message in messages %}
+			{{ message }}
+			{% endfor %}
+		</div>
+		{% endif %}
+		{{ user_info }}
+		<div class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6">
+		<div class="panel-group">
+			<div class="panel panel-default" style="margin-top:50px;">
+				<div class="panel-heading" style="text-align:center; font-size:25px;">Create Account</div>
+				<div class="panel-body">
+			<form method="POST" action="{% url 'profile_save' %}">
+				{% csrf_token %}
+				{{ form1.as_p }}
+
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+			</form></div>
+
+		</div>
+	</div>
+	</div></div></div>
+
+{% endblock %}

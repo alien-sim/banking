@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserProfile
-
+from .forms import UserProfileForm, TransactionForm
 
 @login_required(login_url='login')
 def home(request):
@@ -51,7 +50,7 @@ def logout(request):
 @login_required(login_url='login')
 def profile_form(request):
 	try:
-		profileform = UserProfile()
+		profileform = UserProfileForm()
 		form = {
         	'profileform' : profileform
         }
@@ -63,7 +62,7 @@ def profile_form(request):
 def profile_save(request):
 	try:
 		print("save profile", request.user)
-		saveProfile = UserProfile(request.POST,request.FILES)
+		saveProfile = UserProfileForm(request.POST,request.FILES)
 		if saveProfile.is_valid():
 			post = saveProfile.save(commit=False)
 			post.user = User.objects.get(username= request.user)
@@ -73,4 +72,16 @@ def profile_save(request):
 			return render(request, "profile.html", {'profileform' : saveProfile})
 	except Exception as e:
 		print("profile save error == ", e)
-	
+
+@login_required(login_url='login')
+def transfer(request):
+    if request.method == 'POST':
+        form1 = TransactionForm(request.POST)
+        if form1.is_valid():
+            form1.save()
+            messages.add_message(request, messages.INFO, 'Payment Successfully Done@@')
+            return redirect('home')
+    else:
+        form1 = TransactionForm()
+    return render(request, 'transfer.html', {'form1': form1})
+
