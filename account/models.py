@@ -41,13 +41,6 @@ class User_Profile(models.Model):
 class Account_details(models.Model):
     id = models.UUIDField(primary_key=True,	default=uuid4, editable = False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    account_no = models.PositiveIntegerField(
-        unique=True,
-        validators=[
-            MinValueValidator(10000000),
-            MaxValueValidator(99999999)
-        ]
-    )
     account_type = models.CharField(max_length=20)
     balance = models.FloatField(default=0)
     date_of_opening = models.DateField(auto_now_add=True)
@@ -70,8 +63,17 @@ tchoice = [
 
 class Transactions(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE)
+    Recipient_Name = models.CharField(max_length=110)
     transaction_type = models.CharField(max_length=110, choices=tchoice)
     amount = models.FloatField()
+    account_no = models.PositiveIntegerField(
+        unique=True,
+        validators=[
+            MinValueValidator(10000000),
+            MaxValueValidator(99999999999999999)
+        ]
+    )
+    IFSC= models.CharField(max_length=110)
     # date = models.DateTimeField(auto_now=True)
     current_user = models.IntegerField()
 

@@ -1,6 +1,11 @@
 from django import forms
 from .models import User_Profile, Account_details, Transactions
 from phone_field import PhoneField
+from django.core.validators import (
+    MinValueValidator,
+    MaxValueValidator,
+    RegexValidator,
+)
 
 
 class UserProfileForm(forms.ModelForm):
@@ -47,6 +52,18 @@ class UserProfileForm(forms.ModelForm):
 
 class TransactionForm(forms.ModelForm):
 
+    Recipient_Name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter the Recipient Name'}))
+
+    IFSC = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter the IFSC Code'}))
+
+    account_no = forms.IntegerField(validators=[
+            MinValueValidator(10000000),
+            MaxValueValidator(99999999999999999)
+        ], required=True, widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter the Account No.'}))
+
     tchoice = [
         ('Online', 'Online'),
         ('Credit-Card', 'Credit Card')
@@ -62,6 +79,6 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transactions
-        fields = {'transaction_type', 'amount'}
+        fields = {'Recipient_Name', 'IFSC', 'account_no', 'transaction_type', 'amount'}
 
 
