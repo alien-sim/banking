@@ -20,21 +20,10 @@ def signup(request):
         user = User.objects.create_user(username, email, password)
         user.save()
         messages.add_message(request, messages.INFO, 'Successfully User registered.')
-        # return redirect('login')
-        profileform = UserProfile()
-        print("formmmm -- ")
-        print(profileform)
-        user_info = {
-        	'username' : user.username,
-        	'email' : user.email,
-        	# 'username' : 'dhsds',
-        	# 'email' : 'jdakdh@jksha.com',
-        	'profileform' : profileform
-        }
-
-        return render(request, "profile.html",{'profileform':profileform})
+        return redirect('login')
     else:
-        return render(request, 'signup.html')
+    	
+    	return render(request, 'signup.html')
 
 
 def login(request):
@@ -42,11 +31,13 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        # print("mmmmm",messages.SUCCESS)
         if user:
             auth_login(request, user)
-            return redirect('home')
+            return redirect('profile-form')
         else:
             messages.add_message(request, messages.INFO, 'The username and/or password you specified are not correct.')
+            # print("mmmmm",messages.INFO)
             return redirect('login')
     else:
         return render(request, 'login.html')
@@ -57,10 +48,29 @@ def logout(request):
     auth_logout(request)
     return redirect('login')
 
+@login_required(login_url='login')
+def profile_form(request):
+	try:
+		profileform = UserProfile()
+		form = {
+        	'profileform' : profileform
+        }
+		return render(request, "profile.html",form)
+	except Exception as e:
+		print("error in profile-form redirect")
+
+@login_required(login_url='login')
 def profile_save(request):
 	try:
-		print("save profile")
-		return render(request, "profile.html")
+		print("save profile", request.user)
+		saveProfile = UserProfile(request.POST,request.FILES)
+		if saveProfile.is_valid():
+			post = saveProfile.save(commit=False)
+			post.user = User.objects.get(username= request.user)
+			post.save()
+			return redirect('home')
+		else:
+			return render(request, "profile.html", {'profileform' : saveProfile})
 	except Exception as e:
 		print("profile save error == ", e)
 	

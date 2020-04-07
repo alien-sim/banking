@@ -12,7 +12,7 @@ class User_Profile(models.Model):
     )
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.FileField(upload_to='images/', null=True, blank=True,help_text="Upload only .png, .jpg & .jpeg image extension.")
-	phone = PhoneField(blank=True, help_text='Contact phone number')
+	contact = PhoneField(blank=True, help_text='Contact phone number')
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
 	gender = models.CharField(max_length=10,choices=g_choice)
@@ -36,7 +36,7 @@ class Account_details(models.Model):
 	account_type = models.CharField(max_length=20)
 	balance = models.FloatField(default=0)
 	date_of_joining = models.DateField()
-	date_of_opening = models.DateField()
+	# date_of_opening = models.DateField()
 
 
 	class Meta:

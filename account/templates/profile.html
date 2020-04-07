@@ -12,49 +12,61 @@
 		</div>
 		{% endif %}
 		
-			<!-- <form method="POST" action="{% url 'profile_save' %}">
+			<form method="POST" action="{% url 'profile_save' %}" enctype="multipart/form-data">
+				{% csrf_token %}
 				<div class="col-md-6 form-group">
-				    <label>First Name</label>
-				    <input type="text" class="form-control" >
+				    <label>Father Name</label>
+				    {{ profileform.father_name }}
 				    
 				</div>
 
 				<div class=" col-md-6 form-group">
-				    <label>Last Name</label>
-				    <input type="text" class="form-control" >
+				    <label>Mother Name</label>
+				    {{ profileform.mother_name }}
 				</div>
 
 				<div class="col-md-6 form-group">
 				    <label>Gender</label>
-				    <select class="form-control" name="gender">
-				    	<option value="male">Male</option>
-				    	<option value="female">Female</option>
-				    	<option value="other">Other</option>
-				    </select>
+				    {{ profileform.gender }}
 				</div>
 
 				<div class="col-md-6 form-group">
 				    <label>Date of birth</label>
-				    <input type="date" class="form-control">
+				    {{ profileform.date_of_birth }}
 				</div>
 
 				<div class="col-md-6 form-group">
 				    <label>Contact No.</label>
-				    <input type="number" class="form-control">
+				    {{ profileform.contact }}
 				</div>
 
 				<div class="col-md-6 form-group">
 				    <label>Profile Image</label>
-				    <input type="file" class="w-100">
+				    {{ profileform.image }}
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>Address</label>
+				    {{ profileform.address }}
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>City</label>
+				    {{ profileform.city }}
+				</div>
+				<div class="col-md-6 form-group">
+				    <label>State</label>
+				    {{ profileform.state }}
+				</div>
+
+				<div class="col-md-6 form-group">
+				    <label>PinCode</label>
+				    {{ profileform.pincode }}
 				</div>
 				<div class="col-md-12 text-right">
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
-			</form> -->
-			
-			<form  method="POST" class="post-form">
-				{% csrf_token %}
-				{{ profileform.as_p }}
+				
 			</form>
 		</div>
 	</div>
