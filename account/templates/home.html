@@ -35,6 +35,9 @@
 		        <li><a href="/transfer">Transfer Money</a></li>
 		        <li><a href="/editprofile">Update Profile</a></li>
 				<li><a href="/accountbalance">Account balance</a></li>
+				{% if request.user.is_superuser %}
+					<li><a href="/activate_user">Activate New Users</a></li>
+				{% endif %}
 
 			  </ul>
 			  	<ul class="nav navbar-nav navbar-right">

@@ -9,6 +9,7 @@ urlpatterns = [
     path('profile-form', views.profile_form, name='profile-form'),
     path('profile_save', views.profile_save, name='profile_save'),
     path('transfer', views.transfer, name='transfer'),
+    path(r'activate_user', views.activation_page, name='activate-page'),
     url(r'^confirm/(?P<activation_key>\w+)/$', views.signup_confirm,name='signup-confirm'),
     path('logout', views.logout, name='logout'),
 ]

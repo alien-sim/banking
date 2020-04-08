@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 
+from django.utils import timezone
 from django.conf import settings
 import hashlib, datetime, random
 
@@ -58,9 +59,9 @@ def signup_confirm(request, activation_key):
 		user_active = UserActivation.objects.get(activation_key=activation_key)
 		if user_active.key_expires < timezone.now():
 			return render('confirm_expired.html')
-		user_profile.is_active = True
-		user_profile.save()
-		return redirect('profile-form')
+		user_active.is_active = True
+		user_active.save()
+		return redirect('activate-page')
 	except Exception as e:
 		print("activation confirm error -- ", e)
 
@@ -70,14 +71,19 @@ def login(request):
 		password = request.POST.get('password')
 		user = authenticate(request, username=username, password=password)
 		if user:
-			act_obj = UserActivation.objects.get(user=username)
-
-			if act_obj.is_active:
+			if user.is_superuser:
 				auth_login(request, user)
 				return redirect('profile-form')
 			else:
-				messages.add_message(request, messages.INFO, 'The username and/or password you specified are not correct.')
-				return redirect('login')
+				act_obj = UserActivation.objects.get(user=user.id)
+				if act_obj.is_active:
+					auth_login(request, user)
+					return redirect('profile-form')
+				else:
+					return render(request,"not_activated.html")
+		else:
+			messages.add_message(request, messages.INFO, 'The username and/or password you specified are not correct.')
+			return redirect('login')
 	else:
 		return render(request, 'login.html')
 
@@ -125,3 +131,11 @@ def transfer(request):
         form1 = TransactionForm()
     return render(request, 'transfer.html', {'form1': form1})
 
+def activation_page(request):
+	try:
+		print("@@")
+		not_active = UserActivation.objects.filter(is_active=False)
+		print("nott ", not_active)
+		return render(request, 'activate_user.html',{'activate':not_active})
+	except Exception as e:
+		print("actcivation page -- ",str(e))
