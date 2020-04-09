@@ -1,25 +1,34 @@
-from django import forms
 from .models import User_Profile, Account_details, Transactions
-from phone_field import PhoneField
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import MoneyTransfer, Withdrawal
 from django.core.validators import (
     MinValueValidator,
-    MaxValueValidator,
-    RegexValidator,
+    MaxValueValidator
 )
 
 
-class UserProfileForm(forms.ModelForm):
+class UserProfileForm(UserCreationForm):
 
-    image = forms.FileField(required=True, widget=forms.FileInput(
-        attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'}))
+    # image = forms.FileField(required=True, widget=forms.FileInput(
+    #     attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'}))
 
-    phone = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    phone = forms.IntegerField(max_value=10000000000, required=True, widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'placeholder': "Enter the Contact"}))
 
     father_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'}))
+        attrs={'class': 'form-control', 'placeholder': "Enter the Fathers name"}))
 
     mother_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Contact'}))
+        attrs={'class': 'form-control', 'placeholder': 'Enter the Mothers name'}))
+    achoice = [
+
+        ("Single Account", "Single Account"),
+        ("Joint Account", "Joint Account")
+    ]
+
+    account_type = forms.TypedChoiceField(required=True, choices=achoice, widget=forms.Select(
+        attrs={'class': 'form-control'}))
 
     choices = [
         ("Male", "Male"),
@@ -29,10 +38,11 @@ class UserProfileForm(forms.ModelForm):
     gender = forms.TypedChoiceField(required=True, choices=choices, widget=forms.
                              Select(attrs={'class': 'form-control'}))
 
-    date_of_birth = forms.DateField(required=True, widget=forms.
-                             SelectDateWidget(attrs={'class': 'form-control'}))
+    YEARS = [x for x in range(1940, 2021)]
 
-    address = forms.CharField(required=True, widget=forms.TextInput(
+    date_of_birth = forms.DateField(label='What is your birth date?', widget=forms.SelectDateWidget(years=YEARS))
+
+    address = forms.CharField(required=True, widget=forms.Textarea(
         attrs={'class': 'form-control', 'placeholder': 'Enter the Address'}))
 
     city = forms.CharField(required=True, widget=forms.TextInput(
@@ -46,7 +56,7 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = User_Profile
-        fields = {'image', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
+        fields = {'username', 'password1', 'password2', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
                   'address', 'city', 'pincode', }
 
 
@@ -99,5 +109,31 @@ class AccountDetailsForm(forms.ModelForm):
 
 
     class Meta:
-        model = Transactions
+        model = Account_details
         fields = {'date_of_opening', 'account_type', 'balance'}
+
+
+class DepositForm(forms.ModelForm):
+    class Meta:
+        model = MoneyTransfer
+        fields = ["amount"]
+
+
+class WithdrawalForm(forms.ModelForm):
+    class Meta:
+        model = Withdrawal
+        fields = ["amount"]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(WithdrawalForm, self).__init__(*args, **kwargs)
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+
+        if self.user.account.balance < amount:
+            raise forms.ValidationError(
+                'You Can Not Withdraw More Than You Balance.'
+            )
+
+        return amount

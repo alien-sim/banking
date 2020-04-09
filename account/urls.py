@@ -9,5 +9,7 @@ urlpatterns = [
     path('update_profile_save/<str:pk>', views.update_profile_save, name='update_profile_save'),
     path('account_details', views.account_details, name='account_details'),
     path('transfer', views.transfer, name='transfer'),
+    path('deposit_view', views.deposit_view, name='deposit_view'),
+    path('withdrawal_view', views.withdrawal_view, name='withdrawal_view'),
     path('logout', views.logout, name='logout'),
 ]
