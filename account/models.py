@@ -40,12 +40,12 @@ class UserProfile(models.Model):
     pincode = models.BigIntegerField()
 
     class Meta:
-        db_table = 'user_profile'
+        db_table = 'user_profiles'
         verbose_name_plural = 'USER_PROFILE'
         managed = True
 
     def __str__(self):
-        return str(self.user)
+        return self.user.Username
 
 
 
@@ -53,7 +53,7 @@ class UserProfile(models.Model):
 class Account_details(models.Model):
     # id = models.UUIDField(primary_key=True,	default=uuid4, editable = False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    account_number = models.IntegerField()
+    account_number = models.IntegerField(default=1)
     balance = models.IntegerField()
     user_name = models.CharField(max_length=150, default = None)
 

@@ -1,6 +1,8 @@
-from .models import User_Profile, Account_details, Transactions
+from .models import UserProfile, Account_details, Transactions
 from django import forms
+from . import models
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import MoneyTransfer, Withdrawal
 from django.core.validators import (
     MinValueValidator,
@@ -8,7 +10,13 @@ from django.core.validators import (
 )
 
 
-class UserProfileForm(UserCreationForm):
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = {'username', 'password1', 'password2'}
+
+
+class ProfileForm(forms.ModelForm):
 
     # image = forms.FileField(required=True, widget=forms.FileInput(
     #     attrs={'class': 'form-control', 'multiple': True,  'accept': 'image/*'}))
@@ -55,8 +63,8 @@ class UserProfileForm(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': 'Enter the Pincode'}))
 
     class Meta:
-        model = User_Profile
-        fields = {'username', 'password1', 'password2', 'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
+        model = UserProfile
+        fields = {'father_name', 'mother_name', 'phone', 'gender', 'date_of_birth',
                   'address', 'city', 'pincode', }
 
 
@@ -113,10 +121,14 @@ class AccountDetailsForm(forms.ModelForm):
         fields = {'date_of_opening', 'account_type', 'balance'}
 
 
-class DepositForm(forms.ModelForm):
+class MoneyTransferForm (forms.ModelForm):
     class Meta:
-        model = MoneyTransfer
-        fields = ["amount"]
+        model = models.MoneyTransfer
+        fields = [
+            "enter_your_user_name",
+            "enter_the_destination_account_number",
+            "enter_the_amount_to_be_transferred_in_INR"
+        ]
 
 
 class WithdrawalForm(forms.ModelForm):
