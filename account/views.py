@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-# from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
@@ -11,7 +11,7 @@ from django.conf import settings
 import hashlib, datetime, random
 
 from .forms import UserProfileForm, TransactionForm
-from .models import UserActivation
+from .models import UserActivation, User_Profile
 
 @login_required(login_url='login')
 def home(request):
@@ -45,11 +45,11 @@ def send_activation_mail(request, user):
 		active_info.save()
 
 		# Send email with activation key
-		email_subject = 'Account confirmation'
-		email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-		48hours http://127.0.0.1:8000/confirm/%s" % (username, activation_key)
+		# email_subject = 'Account confirmation'
+		# email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
+		# 48hours http://127.0.0.1:8000/confirm/%s" % (username, activation_key)
 
-		send_mail(email_subject, email_body, 'Banking App',[email], fail_silently=False)
+		# send_mail(email_subject, email_body, 'Banking App',[email], fail_silently=False)
 	except Exception as e:
 		print("activation lick error == ", e)
 
@@ -96,9 +96,19 @@ def logout(request):
 @login_required(login_url='login')
 def profile_form(request):
 	try:
-		profileform = UserProfileForm()
+		profile = User_Profile.objects.filter(user=request.user).values()
+		print(profile[0])
+		if profile:
+			
+			profileform = UserProfileForm(initial=profile[0])
+			type_form = 'edit'
+		else:
+			profileform = UserProfileForm()
+			type_form = 'create'
 		form = {
-        	'profileform' : profileform
+        	'profileform' : profileform,
+        	'type_form' : type_form
+
         }
 		return render(request, "profile.html",form)
 	except Exception as e:
@@ -107,15 +117,27 @@ def profile_form(request):
 @login_required(login_url='login')
 def profile_save(request):
 	try:
-		print("save profile", request.user)
-		saveProfile = UserProfileForm(request.POST,request.FILES)
-		if saveProfile.is_valid():
-			post = saveProfile.save(commit=False)
-			post.user = User.objects.get(username= request.user)
-			post.save()
-			return redirect('home')
+		type_form = 'edit'
+		if type_form == 'edit':
+			print(type_form)
+			instance = get_object_or_404(User, id=request.user.id)
+			saveProfile = UserProfileForm(request.POST, request.FILES, instance=instance)
+			if saveProfile.is_valid():
+				print(request.POST)
+
+				saveProfile.save(commit=True)
+			return redirect('profile-form')
 		else:
-			return render(request, "profile.html", {'profileform' : saveProfile})
+			print("new profile")
+			instance = User.objects.get(username= request.user)
+			saveProfile = UserProfileForm(request.POST, request.FILES)
+			if saveProfile.is_valid():
+				saveProfile.save(commit=False)
+				post.user = instance
+				post.save()
+				return redirect('home')
+			else:
+				return render(request, "profile.html", {'profileform' : saveProfile})
 	except Exception as e:
 		print("profile save error == ", e)
 

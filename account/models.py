@@ -2,7 +2,7 @@ from uuid import uuid4
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-from phone_field import PhoneField
+# from phone_field import PhoneField
 from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
@@ -16,7 +16,7 @@ class User_Profile(models.Model):
 		)
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.FileField(upload_to='images/', null=True, blank=True,help_text="Upload only .png, .jpg & .jpeg image extension.")
-	contact = PhoneField(blank=True, help_text='Contact phone number')
+	contact = models.BigIntegerField()
 	father_name = models.CharField(max_length=30)
 	mother_name = models.CharField(max_length=30)
 	gender = models.CharField(max_length=10,choices=g_choice)
