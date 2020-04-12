@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib import messages
@@ -198,7 +199,10 @@ def create_account(request):
 @login_required(login_url='login')
 def transaction(request):
 	try:
-		transaction = Transactions.objects.filter(current_user=request.user.id).values().order_by('-datetime')
+		acc_id = Account_details.objects.filter(current_user=request.user.id).values('id')
+		
+		acc_idd = acc_id[0]['id']
+		transaction = Transactions.objects.filter(current_user=request.user.id).values().order_by('-datetime') | Transactions.objects.filter(recipient_acc_id=acc_idd).values().order_by('-datetime')
 		return render(request, 'transaction.html',{'transaction':transaction} )
 	except Exception as e:
 		print("transaction error -- ", e)
@@ -261,15 +265,14 @@ def new_transaction(request, new_balance):
 		recipient = Account_details.objects.get(id=form_data.get('recipient_acc'))
 		new_transaction = TransactionForm(form_data)
 		print("form_datta",form_data)
-		# if new_transaction.is_valid():
-		# 	transaction = new_transaction.save(commit=False)
-		# 	transaction.current_user = request.user.id
-		# 	transaction.balance = new_balance
-		# 	# transaction.recipient_acc = recipient
-		# 	# print("yess--33", transaction)
-		# 	# transaction.save()
+		if new_transaction.is_valid():
+			transaction = new_transaction.save(commit=False)
+			transaction.current_user = request.user.id
+			transaction.balance = new_balance
+			transaction.recipient_acc = recipient
+			transaction.save()
 			
-		# else:
-		# 	print(new_transaction.errors)
+		else:
+			print(new_transaction.errors)
 	except Exception as e:
 		print("new transaction error",e)

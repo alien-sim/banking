@@ -1,6 +1,7 @@
 # Ignore all __pycache__ files.
 # ignore virtual environment
 venv/
+media/
 .pyc 
 *.idea
 *__pycache__*

@@ -17,6 +17,7 @@
 				<thead>
 					<tr>
 					<th>Transaction</th>
+					<th>Recipient Account</th>
 					<th>Date</th>
 					<th class="text-right">Amount</th>
 					</tr>
@@ -24,7 +25,12 @@
 				<tbody>
 					{% for row in transaction %}
 					<tr class="color-{{ row.transaction_type }}">
-						<td>{{ row.transaction_type }}</td>
+						{% if row.current_user == request.user.id %}
+							<td>{{ row.transaction_type }}</td>
+						{% else %}
+							<td> Recieve</td>
+						{% endif %}
+						<td> {{ row.recipient_acc_id }}</td>
 						<td>{{ row.datetime }}</td>
 						<td class="text-right">{{ row.amount }}</td>
 					</tr>

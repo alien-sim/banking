@@ -68,7 +68,7 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transactions
-        fields = {'transaction_type', 'amount', 'recipient_acc'}
+        fields = {'transaction_type', 'amount'}
 
 class AccountForm(forms.ModelForm):
     acc_choice = [
