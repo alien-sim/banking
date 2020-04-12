@@ -36,47 +36,47 @@ class User_Profile(models.Model):
 
 
 class Account_details(models.Model):
+	acc_choice = [
+		('Current', 'Current'),
+		('Saving', 'Saving'),
+		('Capital', 'Capital'),
+	]
 
-    id = models.UUIDField(primary_key=True,	default=uuid4, editable = False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    account_type = models.CharField(max_length=20)
-    balance = models.FloatField(default=0)
-    date_of_opening = models.DateField(auto_now_add=True)
+	id = models.UUIDField(primary_key=True,	default=uuid4, editable = False)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	account_type = models.CharField(max_length=20,choices=acc_choice)
+	balance = models.FloatField(default=0)
+	date_of_opening = models.DateField(auto_now_add=True)
+	current_user = models.IntegerField(default=0)
 
-    class Meta:
-        db_table = 'account_details'
-        verbose_name_plural = 'ACCOUNT_DETAILS'
-        managed = True
+	class Meta:
+		db_table = 'account_details'
+		verbose_name_plural = 'ACCOUNT_DETAILS'
+		managed = True
 
-    def __str__(self):
-        return str(self.id)
+	# def __str__(self):
+	# 	return str(self.id)
 
 tchoice = [
-        ('Online', 'Online'),
-        ('Credit-Card', 'Credit Card')
-    ]
+	('Debit', 'Debit'),
+	('Credit', 'Credit'),
+	('Transfer','Transfer')
+]
 
 
 
 class Transactions(models.Model):
-	user = models.ForeignKey(User,  on_delete=models.CASCADE)
-	Recipient_Name = models.CharField(max_length=110)
+	# user = models.ForeignKey(User,  on_delete=models.CASCADE)
 	transaction_type = models.CharField(max_length=110, choices=tchoice)
 	amount = models.FloatField()
-	account_no = models.PositiveIntegerField(
-		unique=True,
-		validators=[
-		MinValueValidator(10000000),
-		MaxValueValidator(99999999999999999)
-		]
-		)
-	IFSC= models.CharField(max_length=110)
-	# date = models.DateTimeField(auto_now=True)
-	current_user = models.IntegerField()
+	current_user = models.IntegerField(default=0)
+	datetime = models.DateTimeField(auto_now=True)
+	recipient_acc = models.ForeignKey(Account_details,  on_delete=models.CASCADE)
+	balance = models.FloatField()
 
 	class Meta:
-		db_table = 'transaction'
-		verbose_name_plural = 'TRANSACTION'
+		db_table = 'transactions'
+		verbose_name_plural = 'TRANSACTIONS'
 		managed = True
 
 	def __str__(self):
@@ -91,6 +91,7 @@ class UserActivation(models.Model):
 	class Meta:
 		db_table = 'user_activation'
 		verbose_name_plural = 'USER_ACTIVATION'
+		managed = True
 
 	def __str__(self):
 		return self.user.username

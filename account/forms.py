@@ -52,33 +52,35 @@ class UserProfileForm(forms.ModelForm):
 
 class TransactionForm(forms.ModelForm):
 
-    Recipient_Name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Recipient Name'}))
-
-    IFSC = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the IFSC Code'}))
-
-    account_no = forms.IntegerField(validators=[
-            MinValueValidator(10000000),
-            MaxValueValidator(99999999999999999)
-        ], required=True, widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter the Account No.'}))
-
     tchoice = [
-        ('Online', 'Online'),
-        ('Credit-Card', 'Credit Card')
+        ('Transfer', 'Transfer'),
+        # ('Debit', 'Debit')
     ]
 
-    transaction_type = forms.TypedChoiceField(required=True, choices=tchoice, widget=forms.Select(
+    transaction_type = forms.ChoiceField(required=True, choices=tchoice, widget=forms.Select(
         attrs={'class': 'form-control'}))
 
-    # date = forms.DateField(required=True, widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Date'}))
-
-    amount = forms.IntegerField(required=True, widget=forms.NumberInput(
+    amount = forms.FloatField(required=True, widget=forms.NumberInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter the Amount'}))
+
+    recipient_acc = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter the Account Number'}))
 
     class Meta:
         model = Transactions
-        fields = {'Recipient_Name', 'IFSC', 'account_no', 'transaction_type', 'amount'}
+        fields = {'transaction_type', 'amount', 'recipient_acc'}
 
+class AccountForm(forms.ModelForm):
+    acc_choice = [
+        ('Current', 'Current'),
+        ('Saving', 'Saving'),
+        ('Capital', 'Capital'),
+    ]
+    account_type = forms.ChoiceField(choices=acc_choice, widget=forms.
+                Select(attrs={'class': 'form-control'}))
 
+    class Meta:
+        model = Account_details
+        fields = {'account_type'}
+
+        

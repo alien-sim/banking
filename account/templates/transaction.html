@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<h2>Transactions</h2>
+	<div class="row main-form">
+		{% if msg %}
+		<div class="alert alert-info" id="myTabContent" >
+			{{ msg }}
+		</div>		
+		{% endif %}
+		<div class="col-md-12">
+			<div class="w-100 text-right my-2">
+				<a class="btn btn-dark" href="/add-transaction">Add Transaction</a>
+			</div>
+			<table class="table table-hover my-table">
+				<thead>
+					<tr>
+					<th>Transaction</th>
+					<th>Date</th>
+					<th class="text-right">Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for row in transaction %}
+					<tr class="color-{{ row.transaction_type }}">
+						<td>{{ row.transaction_type }}</td>
+						<td>{{ row.datetime }}</td>
+						<td class="text-right">{{ row.amount }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- #b5eab561  #f3c3c380 -->
+{% endblock %}

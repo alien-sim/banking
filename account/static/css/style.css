@@ -4,3 +4,5 @@
 .container-fluid .sub-form-div{
 	padding: 20px 30px
 }
+tr.color-Credit{background-color: #b5eab561}
+tr.color-Debit{background-color: #f3c3c380}

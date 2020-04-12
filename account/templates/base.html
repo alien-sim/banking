@@ -7,14 +7,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="static/x-icon" href="/static/favicon.ico">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-	    <!-- <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
-	    <script type="text/javascript" src="{% static 'bootstrap.min.js' %}"></script>
-        <link href="{% static 'bootstrap.min.css' %}"  rel="stylesheet" type="text/css"/> -->
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <link href="{% static 'css/bootstrap.min.css' %}"  rel="stylesheet" type="text/css"/>
+		<link href="{% static 'css/style.css' %}"  rel="stylesheet" type="text/css"/>
+	    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-inverse">
+		<!-- <nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -28,9 +28,9 @@
 		      <ul class="nav navbar-nav">
 		      	{% if user.is_authenticated %}
 			        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-					<li><a href="/profile_save">Create Account</a></li>
+					<li><a href="/create-account">Create Account</a></li>
 					<li><a href="/transactions">Transactions</a></li>
-			        <li><a href="/transfer">Transfer Money</a></li>
+			        <li><a href="/transfer">Transfer Money</a></li> 
 			        <li><a href="/profile_form">Update Profile</a></li>
 					<li><a href="/accountbalance">Account balance</a></li>
 					{% if request.user.is_superuser %}
@@ -50,9 +50,50 @@
 	        	</ul>
 		    </div>
 		  </div>
-		</nav>
+		</nav> -->
 
-		<div class="container">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <a class="navbar-brand" href="/">Home</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		    	<li class="nav-item"><a href="/create-account" class="nav-link">Create Account</a></li>
+				<li class="nav-item"><a href="/transactions" class="nav-link">Transactions</a></li>
+		        <li class="nav-item"><a href="/profile-form" class="nav-link">Profile</a></li>
+				<li class="nav-item"><a href="/accountbalance" class="nav-link">Account balance</a></li>
+				{% if request.user.is_superuser %}
+					<li><a href="/activate_user">Activate New Users</a></li>
+				{% endif %}		      
+		      
+				<!-- <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  Dropdown
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					  <a class="dropdown-item" href="#">Action</a>
+					  <a class="dropdown-item" href="#">Another action</a>
+					  <div class="dropdown-divider"></div>
+					  <a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li> -->
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		  		{% if user.is_authenticated %}
+					<li class="nav-item"><a href="Javascript:Void(0);" class="nav-link">Welcome <b> {{request.user}} </b></a></li>
+				    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+		  		{% else %}
+		       		<li class="nav-item"><a href="{% url 'signup' %}" class="nav-link">Sign up</a></li>
+					<li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a>
+		  		{% endif %}
+					</li>
+	    	</ul>
+		  </div>
+</nav>
+
+		<div class="container mt-2">
 			{% block content %}
               
             {% endblock %}

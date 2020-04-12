@@ -12,64 +12,62 @@
 		</div>
 		{% endif %}
 		
-			<form method="POST" action="{% url 'profile_save' %}" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="col-md-6 form-group">
-				    <label>Father Name</label>
-				    {{ profileform.father_name }}
-				    
-				</div>
+		<form method="POST" action="{% url 'profile_save' %}" enctype="multipart/form-data" class="row px-3">
+			{% csrf_token %}
+			<div class="col-md-6 form-group">
+			    <label>Father Name</label>
+			    {{ profileform.father_name }}
+			    
+			</div>
 
-				<div class=" col-md-6 form-group">
-				    <label>Mother Name</label>
-				    {{ profileform.mother_name }}
-				</div>
+			<div class=" col-md-6 form-group">
+			    <label>Mother Name</label>
+			    {{ profileform.mother_name }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>Gender</label>
-				    {{ profileform.gender }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>Gender</label>
+			    {{ profileform.gender }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>Date of birth</label>
-				    {{ profileform.date_of_birth }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>Date of birth</label>
+			    {{ profileform.date_of_birth }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>Contact No.</label>
-				    {{ profileform.contact }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>Contact No.</label>
+			    {{ profileform.contact }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>Profile Image</label>
-				    {{ profileform.image }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>Profile Image</label>
+			    {{ profileform.image }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>Address</label>
-				    {{ profileform.address }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>Address</label>
+			    {{ profileform.address }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>City</label>
-				    {{ profileform.city }}
-				</div>
-				<div class="col-md-6 form-group">
-				    <label>State</label>
-				    {{ profileform.state }}
-				</div>
+			<div class="col-md-6 form-group">
+			    <label>City</label>
+			    {{ profileform.city }}
+			</div>
+			<div class="col-md-6 form-group">
+			    <label>State</label>
+			    {{ profileform.state }}
+			</div>
 
-				<div class="col-md-6 form-group">
-				    <label>PinCode</label>
-				    {{ profileform.pincode }}
-				</div>
-				<!-- <input type="hidden" name="type_form" value="{{ type_form }}"> -->
-				<div class="col-md-12 text-right">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
-				
-			</form>
-
-		</div>
+			<div class="col-md-6 form-group">
+			    <label>PinCode</label>
+			    {{ profileform.pincode }}
+			</div>
+			<!-- <input type="hidden" name="type_form" value="{{ type_form }}"> -->
+			<div class="col-md-12 text-right">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+			
+		</form>
 	</div>
 {% endblock %}

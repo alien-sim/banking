@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<h2>New Transaction</h2>
+	<div class="row">
+		{% if msg %}
+		<div class="alert alert-info" id="myTabContent" >
+			{{ msg }}
+		</div>
+		{% else %}
+		<form method="POST" class="row w-100">
+			{% csrf_token %}
+			<div class="col-md-6 form-group">
+			    <label>Transaction Type</label>
+			    {{ form.transaction_type }}
+			</div>
+
+			<div class="col-md-6 form-group">
+			    <label>Amount</label>
+			    {{ form.amount }}
+			</div>
+			<div class="col-md-12 form-group">
+			    <label>Recipient Account Id</label>
+			    {{ form.recipient_acc }}
+			</div>
+
+			<div class="col-md-12 text-right">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</form>
+		{% endif %}
+	</div>
+{% endblock %}

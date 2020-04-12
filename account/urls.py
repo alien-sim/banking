@@ -3,7 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    url(r'^$', views.home, name='home'),
     path('signup', views.signup, name='signup'),
     path('login', views.login, name='login'),
     path('profile-form', views.profile_form, name='profile-form'),
@@ -11,5 +11,8 @@ urlpatterns = [
     path('transfer', views.transfer, name='transfer'),
     path(r'activate_user', views.activation_page, name='activate-page'),
     url(r'^confirm/(?P<activation_key>\w+)/$', views.signup_confirm,name='signup-confirm'),
+    path('create-account', views.create_account, name='create-account'),
+    path('transactions', views.transaction, name='transaction'),
+    path('add-transaction', views.add_transaction, name='add-transaction'),
     path('logout', views.logout, name='logout'),
 ]
