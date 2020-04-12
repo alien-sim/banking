@@ -118,10 +118,11 @@ def profile_form(request):
 @login_required(login_url='login')
 def profile_save(request):
 	try:
-		type_form = 'edit'
+		type_form = request.POST.get('type_form')
 		if type_form == 'edit':
 			print(type_form)
-			instance = get_object_or_404(User, id=request.user.id)
+			inst = get_object_or_404(User, id=request.user.id)
+			instance = User_Profile.objects.get(user=inst)
 			saveProfile = UserProfileForm(request.POST, request.FILES, instance=instance)
 			if saveProfile.is_valid():
 				print(request.POST)
@@ -234,27 +235,13 @@ def add_transaction(request):
 
 			if flag :
 
-				print("yesssss")
 				account.balance = new_balance
-				print("acco--------", account)
 				account.save()
 				recipient1 = Account_details.objects.get(id=request.POST.get('recipient_acc'))
 				recipient1.balance = recipient_new_balance
 				recipient1.save()
 
 				new_transaction(request, new_balance)
-
-				# new_transaction = TransactionForm(request.POST,instance=recipient)
-				# if new_transaction.is_valid():
-				# 	transaction = new_transaction.save(commit=False)
-				# 	transaction.current_user = request.user.id
-				# 	transaction.balance = new_balance
-				# 	transaction.recipient_acc = recipient
-				# 	# print("yess--33", transaction)
-				# 	transaction.save()
-					
-				# else:
-				# 	print(new_transaction.errors)
 
 				return redirect('transaction')
 			else:
@@ -272,16 +259,17 @@ def new_transaction(request, new_balance):
 		form_data = request.POST
 		print("new_transaction")
 		recipient = Account_details.objects.get(id=form_data.get('recipient_acc'))
-		new_transaction = TransactionForm(form_data,instance=recipient)
-		if new_transaction.is_valid():
-			transaction = new_transaction.save(commit=False)
-			transaction.current_user = request.user.id
-			transaction.balance = new_balance
-			# transaction.recipient_acc = recipient
-			# print("yess--33", transaction)
-			transaction.save()
+		new_transaction = TransactionForm(form_data)
+		print("form_datta",form_data)
+		# if new_transaction.is_valid():
+		# 	transaction = new_transaction.save(commit=False)
+		# 	transaction.current_user = request.user.id
+		# 	transaction.balance = new_balance
+		# 	# transaction.recipient_acc = recipient
+		# 	# print("yess--33", transaction)
+		# 	# transaction.save()
 			
-		else:
-			print(new_transaction.errors)
+		# else:
+		# 	print(new_transaction.errors)
 	except Exception as e:
 		print("new transaction error",e)
