@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<!-- <h2>Account Balance</h2> -->
+	<div class="row main-form">
+		{% if msg %}
+		<div class="alert alert-info" id="myTabContent" >
+			{{ msg }}
+		</div>		
+		{% endif %}
+		<div class="col-md-12 text-center">
+
+			<div class="w-50 account-card">
+				<h5>Available Balance</h5>
+				&#x20B9; {{ balance.balance }}
+			</div>
+			
+		</div>
+	</div>
+	<!-- #b5eab561  #f3c3c380 -->
+{% endblock %}

@@ -17,23 +17,24 @@
 				<thead>
 					<tr>
 					<th>Transaction</th>
-					<th>Recipient Account</th>
+					<th>Account ID</th>
 					<th>Date</th>
 					<th class="text-right">Amount</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for row in transaction %}
-					<tr class="color-{{ row.transaction_type }}">
-						{% if row.current_user == request.user.id %}
-							<td>{{ row.transaction_type }}</td>
-						{% else %}
-							<td> Recieve</td>
-						{% endif %}
-						<td> {{ row.recipient_acc_id }}</td>
-						<td>{{ row.datetime }}</td>
-						<td class="text-right">{{ row.amount }}</td>
-					</tr>
+					{% for row in transaction %}  
+						<tr class="color-{{ row.transaction_type }}">
+							{% if row.current_user == request.user.id %}
+								<td> Transfered To</td>
+								<td> {{ row.recipient_acc_id }}</td>
+							{% else %}
+								<td> Recieve From</td>
+								<td> {{ row.owner_acc_id }} </td>
+							{% endif %}
+							<td>{{ row.datetime }}</td>
+							<td class="text-right">{{ row.amount }}</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>

@@ -14,5 +14,6 @@ urlpatterns = [
     path('create-account', views.create_account, name='create-account'),
     path('transactions', views.transaction, name='transaction'),
     path('add-transaction', views.add_transaction, name='add-transaction'),
+    path('accountbalance', views.account_balance, name='account-balance'),
     path('logout', views.logout, name='logout'),
 ]

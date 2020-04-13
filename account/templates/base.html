@@ -14,43 +14,6 @@
 	    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 	</head>
 	<body>
-		<!-- <nav class="navbar navbar-inverse">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>                        
-		      </button>
-		    </div>
-
-		    <div class="collapse navbar-collapse" id="myNavbar">
-		      <ul class="nav navbar-nav">
-		      	{% if user.is_authenticated %}
-			        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-					<li><a href="/create-account">Create Account</a></li>
-					<li><a href="/transactions">Transactions</a></li>
-			        <li><a href="/transfer">Transfer Money</a></li> 
-			        <li><a href="/profile_form">Update Profile</a></li>
-					<li><a href="/accountbalance">Account balance</a></li>
-					{% if request.user.is_superuser %}
-						<li><a href="/activate_user">Activate New Users</a></li>
-					{% endif %}
-				{% endif %}
-		      </ul>
-			  	<ul class="nav navbar-nav navbar-right">
-			  		{% if user.is_authenticated %}
-					<li><a href="Javascript:Void(0);">Welcome <b> {{request.user}} </b></a></li>
-					    <li><a href="{% url 'logout' %}">Logout</a></li>
-			  		{% else %}
-			       		<li><a href="{% url 'signup' %}">Sign up</a></li>
-						<li><a href="{% url 'login' %}">Login</a>
-			  		{% endif %}
-      				</li>
-	        	</ul>
-		    </div>
-		  </div>
-		</nav> -->
 
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		  <a class="navbar-brand" href="/">Home</a>
@@ -60,6 +23,7 @@
 
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
+		  	{% if user.is_authenticated %}
 		    	<li class="nav-item"><a href="/create-account" class="nav-link">Create Account</a></li>
 				<li class="nav-item"><a href="/transactions" class="nav-link">Transactions</a></li>
 		        <li class="nav-item"><a href="/profile-form" class="nav-link">Profile</a></li>
@@ -79,6 +43,7 @@
 					  <a class="dropdown-item" href="#">Something else here</a>
 					</div>
 				</li> -->
+		    {% endif %}
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
 		  		{% if user.is_authenticated %}

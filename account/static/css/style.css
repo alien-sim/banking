@@ -6,3 +6,5 @@
 }
 tr.color-Credit{background-color: #b5eab561}
 tr.color-Debit{background-color: #f3c3c380}
+.account-card{padding: 20px; background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%); margin:20px auto; color: white; font-size: 18px}
+.account-card h5{text-transform: uppercase;}

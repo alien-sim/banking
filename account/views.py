@@ -203,7 +203,16 @@ def transaction(request):
 		
 		acc_idd = acc_id[0]['id']
 		transaction = Transactions.objects.filter(current_user=request.user.id).values().order_by('-datetime') | Transactions.objects.filter(recipient_acc_id=acc_idd).values().order_by('-datetime')
-		return render(request, 'transaction.html',{'transaction':transaction} )
+		acc_details = Account_details.objects.all().values('id', 'current_user')
+		# my_changed_where = list(filter(lambda x: x['current_user'] , transaction))
+		transaction_array = []
+		for acc in acc_details:
+			for tran in transaction :
+				if acc['current_user'] == tran['current_user']:
+					tran['owner_acc_id'] = acc['id']
+					transaction_array.append(tran)
+
+		return render(request, 'transaction.html',{'transaction':transaction_array } )
 	except Exception as e:
 		print("transaction error -- ", e)
 
@@ -276,3 +285,12 @@ def new_transaction(request, new_balance):
 			print(new_transaction.errors)
 	except Exception as e:
 		print("new transaction error",e)
+
+@login_required(login_url='login')
+def account_balance(request):
+	try:
+		print("account balance")
+		balance = Account_details.objects.get(current_user=request.user.id)
+		return render(request, 'account_balance.html',{'balance':balance})
+	except Exception as e:
+		print("account-balance error", e)
