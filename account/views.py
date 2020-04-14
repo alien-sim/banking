@@ -294,3 +294,17 @@ def account_balance(request):
 		return render(request, 'account_balance.html',{'balance':balance})
 	except Exception as e:
 		print("account-balance error", e)
+
+def try_email(request):
+	try:
+		print("email")
+		recepient = 'simrajput555@gmail.com'
+
+		# Send email with activation key
+		email_subject = 'Account confirmation'
+		email_body = "Hey my first email .."
+		send_mail(email_subject, email_body, settings.EMAIL_HOST_USER, [recepient], fail_silently = False)
+		print("@@@")
+		return "Email sent.."
+	except Exception as e:
+		print("emailll -- ",e)

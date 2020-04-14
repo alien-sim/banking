@@ -15,5 +15,6 @@ urlpatterns = [
     path('transactions', views.transaction, name='transaction'),
     path('add-transaction', views.add_transaction, name='add-transaction'),
     path('accountbalance', views.account_balance, name='account-balance'),
+    # path('tryemail', views.try_email, name='try-email'),
     path('logout', views.logout, name='logout'),
 ]
